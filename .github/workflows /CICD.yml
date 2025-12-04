@@ -1,0 +1,19 @@
+name: Hello World
+
+# Trigger the workflow on push to the main branch
+on:
+  push:
+    branches:
+      - main
+
+# Define the jobs that will run
+jobs:
+  say-hello:
+    # Use a runner with the latest Ubuntu OS
+    runs-on: ubuntu-latest
+
+    # Define the steps in the job
+    steps:
+      # Step 1: Print "Hello, World!"
+      - name: Print message
+        run: echo "Hello, World!"

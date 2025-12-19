@@ -1,19 +1,28 @@
 name: Hello World
 
-# Trigger the workflow on push to the main branch
 on:
   push:
     branches:
       - main
+  workflow_dispatch: # Requerido para Jira/API
+    inputs:
+      jira_issue_key:
+        description: 'La clave de la incidencia de Jira'
+        required: true
+        type: string
+  workflow_call: # Opcional: permite llamadas de otros workflows
+    inputs:
+      jira_issue_key:
+        required: true
+        type: string
 
-# Define the jobs that will run
 jobs:
   say-hello:
-    # Use a runner with the latest Ubuntu OS
     runs-on: ubuntu-latest
-
-    # Define the steps in the job
     steps:
-      # Step 1: Print "Hello, World!"
-      - name: Print message
-        run: echo "Hello, World!"
+      - uses: actions/checkout@v4
+      - name: Print static message
+        run: echo "Hello, World! El disparador está activo."
+      
+      - name: Print Jira Issue Key
+        run: echo "Received Jira Issue Key:${{ github.event.inputs.jira_issue_key || inputs.jira_issue_key }}"
